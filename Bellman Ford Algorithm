@@ -1,0 +1,103 @@
+//Bellman Ford Algorithm
+/*We use Bellman Ford in place of dijkstra because 
+Bellman Ford can detect -ve edge weight cycle. 
+We cannot decide shortest path of the graph containing
+-ve edge weigt cycle using Dijkstra and Bellman ford.*/
+#include<bits/stdc++.h>
+using namespace std;
+int V = 5;
+int E = 8;
+
+//struct of Edge 
+class Edge{
+    public:
+    int scr;
+    int dst;
+    int wt; 
+};
+//Step 2: main function of bellmanFord
+void bellmanFord(vector<Edge>& edge)
+{
+    int parent[V];  //store the structure of path
+    int cost_parent[V]; //store the cost of vertex from parent
+    vector<int> value(V, INT_MAX); //keep the shortest path value to each vertex
+    
+    parent[0] = -1;
+    value[0] = 0;
+    bool update; 
+    //relaxatation is done (V-1) times
+    for(int i = 0; i < V-1;  i++)
+    {
+        update = false;
+        for(int j = 0; j < E; j++)
+        {
+            int U = edge[j].scr;
+            int V = edge[j].dst;
+            int wt = edge[j].wt;
+            //condition to check before relaxatation
+            //c1: value[U] != INT_MAX
+            //c2: value[U] + wt < value[V]
+            if(value[U] != INT_MAX && (value[U] + wt < value[V]))
+            {
+                value[V] = value[U] + wt;
+                parent[V] = U;
+                cost_parent[V] =value[V];
+                update = true;
+            }
+            if(update == false)
+              break;
+        }
+    }
+    //Perform the relaxatation once more to check -ve edge cycle
+    for(int j = 0; j<E && update == true; j++)
+    {
+        int U = edge[j].scr;
+        int V = edge[j].dst;
+        int wt = edge[j].wt;
+        if(value[U]!=INT_MAX && (value[U]+wt < value[V]))
+        {
+            cout<<"Negative Edge Cycle is parsent";
+            return;
+        }
+    }
+    //Print the SSSP 
+    for(int i = 0; i < V; i++)
+    {
+        cout<<"U-V:"<<parent[i]<<"->"<<i<<"cost of reach"<<parent[i]<<"from "<<value[i]<<"\n";
+    }
+}
+//Step 1: main function
+int main()
+{
+    vector<Edge> edge(E);
+    int scr, dst, wt;
+    
+    //input all edges
+    for(int i = 0; i < E; i++)
+    {
+        cin>>scr>>dst>>wt;
+        edge[i].scr = scr;
+        edge[i].dst = dst;
+        edge[i].wt = wt;
+    }
+    
+    bellmanFord(edge);
+    
+    return 0;
+}
+
+/*
+Input Edges with Weight
+s d w
+0 1 -1
+0 2 4
+1 2 3 
+1 3 2 
+1 4 2 
+3 2 5 
+3 1 1 
+4 3 -3
+
+*/
+//Time Complexity O(EV)
+
