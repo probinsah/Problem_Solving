@@ -1,0 +1,65 @@
+//Floyd warshall Algorithm
+/*Method to Find Shortest distance between every pair 
+of vertices in a given edge weighted directed cycle
+It can detect -ve edge weight cycle
+*/
+#include<bits/stdc++.h>
+using namespace std;
+
+#define V 6
+//Step 2: function for floyd_warshall
+void floyd_warshall(int graph[V][V])
+{
+    int dist[V][V];
+    for(int i = 0; i < V; i++)
+       for(int j = 0; j < V; j++)
+          dist[i][j] = graph[i][j]; //copy the graph
+          
+    for(int k = 0; k < V; k++)
+    {
+        for(int i = 0; i < V; i++)
+        {
+            for(int j = 0; j < V; j++)
+            {
+                if(dist[i][k] == INT_MAX || dist[k][j] == INT_MAX)
+                   continue;
+                else if(dist[i][k] + dist[k][j] < dist[i][j])
+                {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+    //Checking -ve Edge weight cycle
+    for(int i = 0; i < V; i++)
+    {
+        if(dist[i][i] < 0)
+        {
+            cout<<"Graph Contain -ve Edge weight cycle";
+            return;
+        }
+    }
+    //printing part
+    for(int i = 1; i < V; i++)
+    {
+        for(int j = 0; j < V; j++)
+           cout<<i<<" to "<<j<<" distance is "<<dist[i][j]<<"\n";
+        cout<<"==================\n";   
+    }
+}
+//Step 1: create main function
+int main()
+{
+    int graph[V][V] = {{0, 1, 4, INT_MAX, INT_MAX, INT_MAX},
+                       {INT_MAX, 0, 4, 2, 7, INT_MAX},
+                       {INT_MAX, INT_MAX, 0, 3, 4, INT_MAX},
+                       {INT_MAX, INT_MAX, INT_MAX, 0, INT_MAX, 4},
+                       {INT_MAX, INT_MAX, INT_MAX, 3, 0, INT_MAX},
+                       {INT_MAX, INT_MAX, INT_MAX, INT_MAX, 5, 0}};
+                       
+    floyd_warshall(graph);
+    
+    return 0;
+}
+
+Time Complexity is O(V^3)
