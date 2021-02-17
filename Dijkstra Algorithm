@@ -1,0 +1,78 @@
+//Dijsktra Algorithm - Single Source Shortest Path
+//Use for non-negative weight
+#include<bits/stdc++.h>
+using namespace std;
+#define V 6
+//function to select the vertex with minimum value
+int selectMinVertex(vector<int>& value, vector<bool>& processed)
+{
+    int minimum = INT_MAX;
+    int vertex; 
+    for(int i = 0; i < V; i++)
+    {
+        if(processed[i] == false && value[i] < minimum)
+        {
+            minimum = value[i];
+            vertex = i;
+        }
+    }
+    return vertex;
+}
+
+
+//step 2: function for Dijsktra Algorithm 
+void dijsktra(int graph[V][V])
+{
+    int parent[V]; // use to get shortest path structure
+    vector<int> value(V, INT_MAX);  // shortest path value to each vertex from source
+    vector<bool> processed(V, false);  //check the vertex is included or not.
+    
+    parent[0] = -1;  //start node has no parent
+    value[0] = 0;   //distance of source node to source is 0
+    
+    //(V - 1) edge is needed to cover all vertices
+    for(int i = 0; i < V-1; i++)
+    {
+        //select best vertex apply Greedy Algorithm
+        int U = selectMinVertex(value, processed);  // function to return vertex having lowest value
+        processed[U] = true;
+        
+        //relax the adjacent vertices not yet included in the shortest path
+        //condition 1: (value[U] + graph[U][j]) < value[j]
+        //condition 2: processed == false
+        //condition 3: value[U] != INT_MAX
+        //condition 4: graph[U][j] != 0
+        for(int j = 0; j < V; j++)
+        {
+            if(graph[U][j]!=0 && value[U] != INT_MAX && processed[j] == false && (value[U]+graph[U][j] < value[j]))
+            {
+                value[j] = value[U] + graph[U][j];
+                parent[j] = U;
+            }
+        }
+    }
+    //print shortest path
+    for(int i = 1; i < V; ++i)
+    {
+        cout<<"U->V"<<parent[i]<<"->"<<" wt="<<graph[parent[i]][i]<<"\n";
+    }
+}
+
+//step 1: main function
+int main()
+{
+    //adjacent matrx
+    int graph[V][V] = {{0, 1, 4, 0, 0, 0},
+                       {1, 0, 4, 2, 7, 0},
+                       {4, 4, 0, 3, 5, 0},
+                       {0, 2, 3, 0, 4, 6},
+                       {0, 7, 5, 4, 0, 7},
+                       {0, 0, 0, 6, 7, 0}};
+                       
+    dijsktra(graph);
+    
+    return 0;
+}
+
+//Time Complexity O(V^2)
+//We can reduce the time complexity by using priority Queue and Min Heap and adjacency list
