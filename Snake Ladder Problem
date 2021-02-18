@@ -1,0 +1,76 @@
+//Snake and Ladder Problem
+#include<bits/stdc++.h>
+using namespace std;
+
+//structure for queue 
+struct queueEntry{
+    int v; 
+    int dist;
+};
+//step 2: main function to get the Number of dice Throw
+int getDiceThrow(int move[], int N)
+{
+    //mark all vertex as unvisited 
+    bool *visited = new bool[N];
+    for(int i = 0; i < N; i++)
+       visited[i] = false;
+       
+    //create a queue for BST
+    queue<queueEntry> q;
+    visited[0] = true;  
+    queueEntry s = {0, 0};  //{v, dist} 
+    q.push(s);
+    
+    //break when we reach the last node
+    queueEntry qe;
+    while(!q.empty())
+    {
+        qe = q.front();
+        int v = qe.v;
+        if(v == N-1)
+           break;
+           
+        q.pop();
+        for(int j = v+1; j<=v+6 && j<N; j++)
+        {
+            if(!visited[j])
+            {
+                visited[j] = true;
+                queueEntry a;
+                a.dist = qe.dist + 1;
+                
+                if(move[j]!= -1)
+                  a.v = move[j];
+                else
+                  a.v = j;
+                  
+                q.push(a);  
+            }
+        }
+    }
+    return qe.dist;
+}
+//Step 1: 
+int main()
+{
+    int N = 30;
+    int move[N]; 
+    for(int i = 0; i < N; i++)
+       move[i] = -1;
+    
+    //Ladder
+    move[2] = 21;
+    move[4] = 7;
+    move[10] = 25;
+    move[19] = 28;
+    
+    //Snake
+    move[26] = 0;
+    move[20] = 8;
+    move[10] = 3;
+    move[18] = 6;
+    
+    cout<<"Number of Dice Throw: "<<getDiceThrow(move, N);
+    
+    return 0;
+}
