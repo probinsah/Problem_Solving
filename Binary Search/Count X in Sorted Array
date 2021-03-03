@@ -1,0 +1,49 @@
+//Count the Number of X in the sorted Array 
+//arr[] = {1, 3, 5, 5, 5, 5, 6, 7, 9, 10};  x = 5
+//Binary Search Approach (Recursive Approach): Time _Complex: O(logn) 
+#include<bits/stdc++.h>
+using namespace std;
+
+//first index recurive func
+int findFirst(int arr[], int low, int high, int n, int x)
+{
+    if(high >= low)
+    {
+        int mid = low + (high-low)/2;
+        if((mid == 0 || x > arr[mid-1]) && x == arr[mid])
+            return mid;
+        else if(arr[mid] < x)
+            return findFirst(arr, mid+1, high, n, x);
+        else
+            return findFirst(arr, low, mid-1, n, x);
+    }
+    return -1;
+}
+
+//last Index
+int findLast(int arr[], int low, int high, int n, int x)
+{
+    if (high >= low) {
+        int mid = low + (high - low) / 2;
+        if ((mid == n - 1 || x < arr[mid + 1]) && arr[mid] == x)
+            return mid;
+        else if (x < arr[mid])
+            return findLast(arr, low, (mid - 1), n, x);
+        else
+            return findLast(arr, (mid + 1), high, n, x);
+    }
+    return -1;
+}
+int main()
+{
+    int arr[] = {1, 2, 5, 5, 5, 5, 5, 7, 9, 10};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int x = 5; 
+    int low = 0;
+    int high = n-1;
+    int first = findFirst(arr, low, high, n, x);
+    int last = findLast(arr, low, high, n, x);
+    int count  = last-first +1;
+    cout<<"Count: "<<count;
+    return 0;
+}
