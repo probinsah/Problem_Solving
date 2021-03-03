@@ -14,9 +14,9 @@ int Search(int arr[], int n, int x)
         if(arr[mid] == x)
            return mid;
         if(arr[mid] < x)
-           low = mid+1;
+           low = mid+1;    // for desc: high = mid-1;
         else
-           high = mid-1;
+           high = mid-1;   // for desc: low = mid+1;  
     }
     return -1;
 }
