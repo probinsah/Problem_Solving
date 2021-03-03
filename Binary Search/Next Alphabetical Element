@@ -1,0 +1,32 @@
+//Next Alphabetic Element
+#include<bits/stdc++.h>
+using namespace std;
+
+///////////////////////////....................Ceiling of the given Alphabet (Binary Search)................................../////////////////////////////////
+char nextAlphabet(char ch[], int n, char key)
+{
+    int low = 0;
+    int high = n-1;
+    char s = '#';
+    while(low <= high)
+    {
+        int mid = low+(high-low)/2;
+        if(ch[mid] > key)
+        {
+          high = mid-1;
+          s = ch[mid];
+        } 
+        else
+          low = mid+1;
+    }
+    return s;
+}
+int main()
+{
+    char ch[] = {'a', 'b', 'c', 'f', 'h', 'i'};
+    int n = sizeof(ch);
+    char key = 'd';
+    char c = nextAlphabet(ch, n, key);
+    cout<<c;
+    return 0;
+}
