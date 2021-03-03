@@ -52,3 +52,44 @@ int main()
     cout<<"Single Elemet: "<<ans;
     return 0;
 }
+
+///////////////////////////........................Binary search Approach.....................................//////////////////////////////////
+#include<bits/stdc++.h>
+using namespace std;
+
+/*Using Binary Search: All the */
+void singleElement(int arr[], int low, int high)
+{
+    if(high < low)
+      return;
+    if(low == high)
+    {
+        cout<<arr[low];
+        return;
+    }
+    int mid = low + (high-low)/2;
+    if(mid%2 == 0)
+    {
+        if(arr[mid] == arr[mid+1])
+           singleElement(arr, mid+2, high);
+        else
+           singleElement(arr, low, mid);
+    }
+    else
+    {
+        if(arr[mid] == arr[mid-1])
+           singleElement(arr, mid+1, high);
+        else
+           singleElement(arr, low, mid);
+    }
+}
+
+int main()
+{
+    int arr[] ={1, 1, 2, 3, 3, 4, 4, 8, 8};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int low = 0;
+    int high = n-1;
+    singleElement(arr, low, high);
+    return 0;
+}
