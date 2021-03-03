@@ -1,0 +1,41 @@
+//Find the element in Rotated Sorted Array
+//Binary search Approach
+#include<bits/stdc++.h>
+using namespace std;
+
+//find in rotated Array
+int findRotated(int arr[], int n, int x)
+{
+    int low = 0;
+    int high = n-1;
+    while(low <= high)
+    {
+        int mid = low + (high-low)/2;
+        if(arr[mid] == x)
+           return mid;
+        else if(arr[mid] >= arr[low])
+        {
+            if(x >= arr[low] && x <= arr[mid])
+               high = mid-1;
+            else
+               low = mid+1;
+        }
+        else
+        {
+            if(x >= arr[mid] && x <= arr[high])
+               low = mid+1;
+            else
+               high = mid-1;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    int arr[] ={4, 5, 6, 7, 0, 1, 2};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int key = 1;
+    int ans = findRotated(arr, n, key);
+    cout<<"Element found at index: "<<ans;
+    return 0;
+}
