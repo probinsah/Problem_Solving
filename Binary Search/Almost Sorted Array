@@ -1,0 +1,39 @@
+////////////..................................Searching in an almost sorted array......................///////////////////////////////////////////////
+//Binary search Approach
+#include<bits/stdc++.h>
+using namespace std;
+
+//Searching in a almost sorted array
+int NearlySorted(int arr[], int n, int x)
+{
+    int low = 0;
+    int high = n-1;
+    while(low <= high)
+    {
+        int mid = low + (high-low)/2;
+        if(arr[mid] == x)
+           return mid;
+        else if(arr[mid+1] == x)
+           return mid+1;
+        else if(arr[mid-1] == x)
+           return mid-1;
+        else
+        {
+            if(arr[mid] < x)
+               low = mid+2;
+            else
+               high = mid-2;
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+    int arr[] ={10, 3, 40 , 20, 50, 80, 70};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int key = 80;
+    int ans = NearlySorted(arr, n, key);
+    cout<<"Element found at index: "<<ans;
+    return 0;
+}
