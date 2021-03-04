@@ -1,0 +1,36 @@
+//Pangrammatic Lipogram: is a text that uses every letter of the alphabet except one.
+#include<bits/stdc++.h>
+using namespace std;
+string alphabets = "abcdefghijklmnopqrstuvwxyz"; 
+void pangramLipogram(string str)
+{
+    for(int i = 0; i<str.length(); i++)
+    {
+        str[i] = tolower(str[i]);
+    }
+    int count = 0;
+    for(int i = 0; i<26; i++)
+    {
+        int pos = str.find(alphabets[i]);  // check every letter of alphabets
+        
+        //if a char is not present in the string count++
+        if(pos<0 || pos >str.length())
+           count+=1;
+    }
+    if(count == 0)
+       cout<<"Pangram"<<endl;
+    else if(count >= 2)
+       cout<<"Might Be Lipogram"<<endl;
+    else
+       cout<<"pangramLipogram"<<endl;
+}
+
+int main()
+{
+    string str1 = "The quick brown fox jumped over the lazy dog";
+    pangramLipogram(str1);
+    
+    string str2 = "The quick brown fox jumps over the lazy dog";
+    pangramLipogram(str2);
+    return 0;
+}
