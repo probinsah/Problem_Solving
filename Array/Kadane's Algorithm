@@ -22,9 +22,14 @@ Question base on Kadane's Algorithm
 1. Maximum Subarray Sum
 https://leetcode.com/problems/maximum-subarray/
 
-2. Maximum Subarray Sum after K Concatenation
+2. Maximum Subarray Sum after K Concatenation (Hard)
 https://leetcode.com/problems/k-concatenation-maximum-sum/
 
 3. Flip Bits
-
+3. a) Maximize number of 0s by flipping a subarray
+      https://www.geeksforgeeks.org/maximize-number-0s-flipping-subarray/
+      
+   b) Find zeroes to be flipped so that number of consecutive 1’s is maximized
+      https://www.geeksforgeeks.org/find-zeroes-to-be-flipped-so-that-number-of-consecutive-1s-is-maximized/
+      
 4. Maximum Sum Rectangle
