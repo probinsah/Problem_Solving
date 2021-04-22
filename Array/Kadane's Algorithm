@@ -1,0 +1,30 @@
+Kadane's Algorithm is use to find the Largest sum contiguous Subarray. 
+arr = {-2, -3, 4, -1, -2,  1, 5, -3}
+4 + -1 + -2 + 1 + 5 = 7 <<<---answer
+
+Kadane's Algorithm steps:
+
+1. max_so_far = INT_MIN,  max_end_here = 0;
+
+2. Run a Loop for each element 
+   a) max_end_here = max_end_here + arr[i]
+   b) if(max_so_far < max_end_here)
+         max_so_far = max_end_here;
+   c) if(max_end_here < 0)
+         max_end_here = 0;
+         
+3. Return max_so_far;
+
+Time complexity O(n)
+Space complexity O(1)
+
+Question base on Kadane's Algorithm
+1. Maximum Subarray Sum
+https://leetcode.com/problems/maximum-subarray/
+
+2. Maximum Subarray Sum after K Concatenation
+https://leetcode.com/problems/k-concatenation-maximum-sum/
+
+3. Flip Bits
+
+4. Maximum Sum Rectangle
