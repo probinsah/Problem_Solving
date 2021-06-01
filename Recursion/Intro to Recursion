@@ -1,0 +1,186 @@
+>>>>>>>>>>>>>>>>>>>>>>>     Introduction to recursion  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+CS 106B Lecture Recursion - https://youtu.be/tq0nmIivqCA
+
+Recursion - Definition of an operation in terms of itself. 
+-- solving a problem using recursion means solving smaller occurance of the same problem. 
+
+Recursive Programming - Write program that can call themselves to solve the problems. 
+-- equally powerful substitution of iteration. 
+
+Base case - A simple occurance that can answer directly. 
+
+Recursive case - A more complex occurance of the problem that cannot be directly answered, but can instead be described in terms of smaller occurance of the same problem. 
+
+Key idea - In the recursive piece of code, you handle the small part of the overall task by yourself, then make the recursive call to handle the rest. 
+
+Ask yourslef that how is this task is self similar? 
+How can I describe the this algorithm in terms of smaller or similar version of itself?
+
+//Print the given number of star(*)
+//assume n >= 1
+
+void printStar(int n){
+    for(int i = 1; i <= n; i++)
+        cout<<"*";
+}
+
+//We can write the above function recursively without using loop
+-- We separate the code into a base case (a simple case that does not make any recursive calls), and a recursive case. 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void printStar(int n){
+    if(n == 1) {
+        //base case: easy to solve by yourself.             | It is easy to print one star just by using cout
+        cout<<"*"<<endl;                                    | so the easiest and smallest step to solve the given problem 
+    }
+    else {
+        //recursive case: hard to solve and need function "help"
+        cout<<"*";                                          | If n > 1 then print one start and call printStar function to
+        printStar(n-1);                                     | do the remaining work to print the remaining n-1 stars. 
+    }
+}
+
+int main()
+{
+    printStar(5);
+    printStar(10);
+    printStar(15);
+    return 0;
+}
+
+Output:-
+
+*****
+**********
+***************
+
+
+Why do we need a base case?
+>> If there will be no base case, the program will go into infinite recursion and it will lead to stack overflow 
+   condition because the stack memory that we get to perform our stack is very limited. The program will crach. 
+
+The Cleaner version of the above code. 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void printStar(int n){
+    cout<<"*";
+    if(n > 1) {
+        printStar(n-1);
+    }
+}
+
+int main()
+{
+    printStar(10);
+    return 0;
+}
+
+Exercise 1: What will be the output of the given recursive code?
+#include<bits/stdc++.h>
+using namespace std;
+
+int mistary(int n) {
+    if(n < 10) {
+        return n;
+    }
+    else {
+        int a = n / 10;
+        int b = n % 10;
+        return mistary(a + b);
+    }
+}
+
+int main()
+{
+    cout<<mistary(648);
+}
+
+...........Pow Exercise.............
+
+//return base^exp
+//precondition condition exp >= 0
+
+int power(int base, int exp){
+    int result = 1;
+    for(int i = 1; i <= exp; i++){
+        result = result * base;
+    }
+    return result; 
+}
+
+Write the recursive function of the above function.
+Without using loop. 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+//return base^exp
+//precondition condition exp >= 0
+
+int power(int base, int expo){
+    if(expo == 0) {            // base case 1 easy to do
+        return 1;   
+    }
+    else if(expo == 1){       // base case 2 easy to do 
+        return base; 
+    }
+    else {                    //recursive hard to do
+        return base * power(base, expo-1);
+    }
+}
+
+int main()
+{
+    cout<<power(2, 5);
+}
+
+Notice: We have writen two base case for the above recursive problem but is it really necessary???? NO
+We can do the same problem without using two base case also. Just try to do as much less work as possible. See Below.  
+
+int power(int base, int expo){
+    if(expo == 0) { // base case easy to do
+        return 1;   
+    }
+    else {            //recursive hard to do
+        return base * power(base, expo-1);
+    }
+}
+
+
+...................is Palindrome.......................
+Return TRUE or FALSE if the string is palindrome or not using Recursion. 
+#include<bits/stdc++.h>
+using namespace std;
+
+//string is palindrome or not
+bool isPalindrome(string s){
+    if(s.length() < 2){      //If string length is < 2 it mean "a" is palindrome or " " empty string is also a palindrome. 
+        return true; 
+    }
+    else {
+        char first = s[0];
+        char last = s[s.length()-1];
+        if(first == last){                    // Comparing the first letter and the last letter of the string. 
+            string rest = s.substr(1, s.length()-2);     //pass the remaining string for the recursive call 
+            return isPalindrome(rest);
+        }
+        else{
+            return false;
+        }
+    }
+}
+
+int main()
+{
+    string str = "PPRRAARRP";
+    cout<<isPalindrome(str);
+}
+
+.......................Binary Representation of an integer.....................
+Write a recursive function to print the Binary representation of an integer number. 
+43 ------>  101011
+
