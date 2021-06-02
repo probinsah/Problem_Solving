@@ -1,0 +1,39 @@
+Source - https://youtu.be/zL4mjpYpRmc
+..............................Back Tracking............................
+Exhaustive Search : Exploring every possible combination from a set of choices or values. 
+-- often implemented recursively. 
+Application.
+-producing all permutations of a set of values.
+-enumerating all possible name,  password, etc. 
+-combinatories and logic programming. 
+
+General pseudo-code for exhaustive search. 
+
+Search(decisions):
+    - If there are no more decision to make: Stop. 
+    - else, let's handle one decision by ourselves and the rest by recursion 
+    for each available choice C for this decision: 
+    * Choose C
+    * Search the remaining decisions that could follow C.
+
+Often the search space consist of many decisions, each of which have several available choices. 
+
+Exercise 1: Print all possible 3 digit binary number using recursion. 
+
+//print all 3 digit binary number 
+void printBinary(int digit, string prefix) {
+    if(digit == 0){
+        cout<<prefix<<endl;   //base case
+    }
+    else {
+        //recursive case
+        printBinary(digit-1, prefix + "0");
+        printBinary(digit-1, prefix + "1");
+    }
+}
+
+int main(){
+    string prefix = "";
+    printBinary(3, prefix);
+    
+}
