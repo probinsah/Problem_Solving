@@ -184,3 +184,44 @@ int main()
 Write a recursive function to print the Binary representation of an integer number. 
 43 ------>  101011
 
+//integer binary representation 
+
+void printBinary(int n){
+    cout<<"I am in "<<n<<endl;       //To check the number of calls it is making 
+    if(n < 2){
+        cout<<n;  //base case (easy)
+    }
+    else{
+        //Recursive part
+        //Binary of 43 -----> Binary of 21 (10101) + Binary of 43 % 2 = 1 === 10101 + 1 === 101011
+        //Binary of 21 -----> Binary of 10 (1010) + Binary of 21 % 2 = 1 === 1010 + 1 === 101011
+        //Binary of 10 -----> Binary of 5  (101) + Binary of 10 % 2 = 0 === 101 + 0 === 1010
+        //Binary of 5 ------> Binary of 2  (10) + Binary of 5 % 2 = 1 === 10 + 1 === 101
+        //Binary of 2 ------> Binary of 1  (1) + Binary of 2 % 2 = 0 === 1 + 0 === 10 
+        //Binary of 1 = 1 base case reach 
+        int lastNum = n % 2;
+        int remNum = n / 2;
+        printBinary(remNum);
+        cout<<lastNum;
+    }
+}
+
+
+int main(){
+    printBinary(43);
+}
+
+Output :
+I am in 43     \
+I am in 21      \
+I am in 10       \  These are the number of calls the recursive function is making. 
+I am in 5        /
+I am in 2       /
+I am in 1      /
+101011
+
+
+************************************************Recursive Leap of Faith************************************************
+
+To be good at recursion you first have to trust on yourself !!!!! Sound strange but true. 
+You have to belive in yourself that whatever you are going to write is going to return you your answer. 
