@@ -150,4 +150,545 @@ diceHelper 3, {}
            {1, 1, 5}
         diceHelper 0, {1, 1, 6}
            {1, 1, 6}   
+           ....................
+           ....................
+           ....................
            
+ ...................All Possible Permutation of a String...................
+ 
+ String  = "MARTY"
+ MARTY, AMRTY, MRATY, MYARY, MTARY, MATRY, MAYRT, MYART,...................
+ 
+ Pseudocode code:
+ 
+ function permutes(s):
+     if s is an empty string: no thing to do;
+     else:
+         //handle all the choices for the single letter; let recursion do the rest. 
+         for each char c in s:
+            choose c to be the first
+            permutes(the rest of the string s)    //explore the remaining chars
+            un-choose c
+ !!!! How do we track our choice???
+      --> In an auxiliary string variable. 
+      
+ #include<bits/stdc++.h>
+using namespace std;
+
+void indent(int n){
+    for(int i = 0; i < n; i++){
+        cout<<"  ";
+    }
+}
+
+void permuteHelper(string str, string choosen){
+    indent(choosen.length());
+    cout<<"Permute(\"" << str << ", "<<choosen<<")"<<endl;
+    if(str.empty()){
+        cout<<choosen<<endl;  //base case
+    }
+    else {
+        //choose/explore/un-choose
+        //(1 - Letter)
+        for(int i = 0; i < str.length(); i++){
+            //choose
+            char c = str[i];
+            choosen += c;
+            str.erase(i, 1);
+            
+            //explore
+            permuteHelper(str, choosen);
+            
+            //un-choose
+            str.insert(i, 1, c);
+            choosen.erase(choosen.length()-1, 1);
+        }
+    }
+}
+
+
+void permute(string str){
+    permuteHelper(str, "");
+}
+
+int main(){
+    string str = "MARTY";
+    permute(str);
+}
+
+Output: 
+
+Permute("MARTY, )
+  Permute("ARTY, M)
+    Permute("RTY, MA)
+      Permute("TY, MAR)
+        Permute("Y, MART)
+          Permute(", MARTY)
+MARTY
+        Permute("T, MARY)
+          Permute(", MARYT)
+MARYT
+      Permute("RY, MAT)
+        Permute("Y, MATR)
+          Permute(", MATRY)
+MATRY
+        Permute("R, MATY)
+          Permute(", MATYR)
+MATYR
+      Permute("RT, MAY)
+        Permute("T, MAYR)
+          Permute(", MAYRT)
+MAYRT
+Permute("R, MAYT)
+          Permute(", MAYTR)
+MAYTR
+    Permute("ATY, MR)
+      Permute("TY, MRA)
+        Permute("Y, MRAT)
+          Permute(", MRATY)
+MRATY
+        Permute("T, MRAY)
+          Permute(", MRAYT)
+MRAYT
+      Permute("AY, MRT)
+        Permute("Y, MRTA)
+          Permute(", MRTAY)
+MRTAY
+        Permute("A, MRTY)
+          Permute(", MRTYA)
+MRTYA
+      Permute("AT, MRY)
+        Permute("T, MRYA)
+          Permute(", MRYAT)
+MRYAT
+        Permute("A, MRYT)
+          Permute(", MRYTA)
+MRYTA
+    Permute("ARY, MT)
+      Permute("RY, MTA)
+        Permute("Y, MTAR)
+          Permute(", MTARY)
+MTARY
+        Permute("R, MTAY)
+          Permute(", MTAYR)
+MTAYR
+      Permute("AY, MTR)
+        Permute("Y, MTRA)
+          Permute(", MTRAY)
+MTRAY
+        Permute("A, MTRY)
+          Permute(", MTRYA)
+MTRYA
+      Permute("AR, MTY)
+        Permute("R, MTYA)
+          Permute(", MTYAR)
+MTYAR
+        Permute("A, MTYR)
+          Permute(", MTYRA)
+MTYRA
+    Permute("ART, MY)
+      Permute("RT, MYA)
+        Permute("T, MYAR)
+          Permute(", MYART)
+MYART
+        Permute("R, MYAT)
+          Permute(", MYATR)
+MYATR
+      Permute("AT, MYR)
+        Permute("T, MYRA)
+          Permute(", MYRAT)
+MYRAT
+        Permute("A, MYRT)
+          Permute(", MYRTA)
+MYRTA
+      Permute("AR, MYT)
+        Permute("R, MYTA)
+          Permute(", MYTAR)
+MYTAR
+        Permute("A, MYTR)
+          Permute(", MYTRA)
+MYTRA
+  Permute("MRTY, A)
+    Permute("RTY, AM)
+      Permute("TY, AMR)
+        Permute("Y, AMRT)
+          Permute(", AMRTY)
+AMRTY
+        Permute("T, AMRY)
+          Permute(", AMRYT)
+AMRYT
+      Permute("RY, AMT)
+        Permute("Y, AMTR)
+          Permute(", AMTRY)
+AMTRY
+        Permute("R, AMTY)
+          Permute(", AMTYR)
+AMTYR
+      Permute("RT, AMY)
+        Permute("T, AMYR)
+          Permute(", AMYRT)
+AMYRT
+        Permute("R, AMYT)
+          Permute(", AMYTR)
+AMYTR
+    Permute("MTY, AR)
+      Permute("TY, ARM)
+        Permute("Y, ARMT)
+          Permute(", ARMTY)
+ARMTY
+        Permute("T, ARMY)
+          Permute(", ARMYT)
+ARMYT
+      Permute("MY, ART)
+        Permute("Y, ARTM)
+          Permute(", ARTMY)
+ARTMY
+        Permute("M, ARTY)
+          Permute(", ARTYM)
+ARTYM
+      Permute("MT, ARY)
+        Permute("T, ARYM)
+          Permute(", ARYMT)
+ARYMT
+        Permute("M, ARYT)
+          Permute(", ARYTM)
+ARYTM
+    Permute("MRY, AT)
+      Permute("RY, ATM)
+        Permute("Y, ATMR)
+          Permute(", ATMRY)
+ATMRY
+        Permute("R, ATMY)
+          Permute(", ATMYR)
+ATMYR
+      Permute("MY, ATR)
+        Permute("Y, ATRM)
+Permute(", ATRMY)
+ATRMY
+        Permute("M, ATRY)
+          Permute(", ATRYM)
+ATRYM
+      Permute("MR, ATY)
+        Permute("R, ATYM)
+          Permute(", ATYMR)
+ATYMR
+        Permute("M, ATYR)
+          Permute(", ATYRM)
+ATYRM
+    Permute("MRT, AY)
+      Permute("RT, AYM)
+        Permute("T, AYMR)
+          Permute(", AYMRT)
+AYMRT
+        Permute("R, AYMT)
+          Permute(", AYMTR)
+AYMTR
+      Permute("MT, AYR)
+        Permute("T, AYRM)
+          Permute(", AYRMT)
+AYRMT
+        Permute("M, AYRT)
+          Permute(", AYRTM)
+AYRTM
+      Permute("MR, AYT)
+        Permute("R, AYTM)
+          Permute(", AYTMR)
+AYTMR
+        Permute("M, AYTR)
+          Permute(", AYTRM)
+AYTRM
+  Permute("MATY, R)
+    Permute("ATY, RM)
+      Permute("TY, RMA)
+        Permute("Y, RMAT)
+          Permute(", RMATY)
+RMATY
+        Permute("T, RMAY)
+          Permute(", RMAYT)
+RMAYT
+      Permute("AY, RMT)
+        Permute("Y, RMTA)
+          Permute(", RMTAY)
+RMTAY
+        Permute("A, RMTY)
+          Permute(", RMTYA)
+RMTYA
+      Permute("AT, RMY)
+        Permute("T, RMYA)
+          Permute(", RMYAT)
+RMYAT
+        Permute("A, RMYT)
+          Permute(", RMYTA)
+RMYTA
+    Permute("MTY, RA)
+      Permute("TY, RAM)
+        Permute("Y, RAMT)
+          Permute(", RAMTY)
+RAMTY
+        Permute("T, RAMY)
+          Permute(", RAMYT)
+RAMYT
+      Permute("MY, RAT)
+        Permute("Y, RATM)
+          Permute(", RATMY)
+RATMY
+        Permute("M, RATY)
+          Permute(", RATYM)
+RATYM
+      Permute("MT, RAY)
+        Permute("T, RAYM)
+          Permute(", RAYMT)
+RAYMT
+        Permute("M, RAYT)
+          Permute(", RAYTM)
+RAYTM
+    Permute("MAY, RT)
+      Permute("AY, RTM)
+        Permute("Y, RTMA)
+          Permute(", RTMAY)
+RTMAY
+        Permute("A, RTMY)
+          Permute(", RTMYA)
+RTMYA
+      Permute("MY, RTA)
+        Permute("Y, RTAM)
+          Permute(", RTAMY)
+RTAMY
+        Permute("M, RTAY)
+          Permute(", RTAYM)
+RTAYM
+      Permute("MA, RTY)
+        Permute("A, RTYM)
+          Permute(", RTYMA)
+RTYMA
+        Permute("M, RTYA)
+          Permute(", RTYAM)
+RTYAM
+    Permute("MAT, RY)
+      Permute("AT, RYM)
+        Permute("T, RYMA)
+          Permute(", RYMAT)
+RYMAT
+        Permute("A, RYMT)
+          Permute(", RYMTA)
+RYMTA
+      Permute("MT, RYA)
+        Permute("T, RYAM)
+          Permute(", RYAMT)
+RYAMT
+        Permute("M, RYAT)
+          Permute(", RYATM)
+RYATM
+      Permute("MA, RYT)
+        Permute("A, RYTM)
+          Permute(", RYTMA)
+RYTMA
+        Permute("M, RYTA)
+          Permute(", RYTAM)
+RYTAM
+  Permute("MARY, T)
+    Permute("ARY, TM)
+      Permute("RY, TMA)
+        Permute("Y, TMAR)
+          Permute(", TMARY)
+TMARY
+        Permute("R, TMAY)
+          Permute(", TMAYR)
+TMAYR
+      Permute("AY, TMR)
+        Permute("Y, TMRA)
+          Permute(", TMRAY)
+TMRAY
+        Permute("A, TMRY)
+          Permute(", TMRYA)
+TMRYA
+      Permute("AR, TMY)
+        Permute("R, TMYA)
+          Permute(", TMYAR)
+TMYAR
+        Permute("A, TMYR)
+          Permute(", TMYRA)
+TMYRA
+    Permute("MRY, TA)
+      Permute("RY, TAM)
+        Permute("Y, TAMR)
+          Permute(", TAMRY)
+TAMRY
+        Permute("R, TAMY)
+          Permute(", TAMYR)
+TAMYR
+      Permute("MY, TAR)
+        Permute("Y, TARM)
+          Permute(", TARMY)
+TARMY
+        Permute("M, TARY)
+          Permute(", TARYM)
+TARYM
+      Permute("MR, TAY)
+        Permute("R, TAYM)
+          Permute(", TAYMR)
+TAYMR
+        Permute("M, TAYR)
+          Permute(", TAYRM)
+TAYRM
+    Permute("MAY, TR)
+      Permute("AY, TRM)
+        Permute("Y, TRMA)
+          Permute(", TRMAY)
+TRMAY
+        Permute("A, TRMY)
+          Permute(", TRMYA)
+TRMYA
+      Permute("MY, TRA)
+        Permute("Y, TRAM)
+          Permute(", TRAMY)
+TRAMY
+        Permute("M, TRAY)
+          Permute(", TRAYM)
+TRAYM
+      Permute("MA, TRY)
+        Permute("A, TRYM)
+          Permute(", TRYMA)
+TRYMA
+        Permute("M, TRYA)
+          Permute(", TRYAM)
+TRYAM
+    Permute("MAR, TY)
+      Permute("AR, TYM)
+        Permute("R, TYMA)
+          Permute(", TYMAR)
+TYMAR
+        Permute("A, TYMR)
+          Permute(", TYMRA)
+TYMRA
+      Permute("MR, TYA)
+        Permute("R, TYAM)
+          Permute(", TYAMR)
+TYAMR
+        Permute("M, TYAR)
+          Permute(", TYARM)
+TYARM
+      Permute("MA, TYR)
+        Permute("A, TYRM)
+          Permute(", TYRMA)
+TYRMA
+        Permute("M, TYRA)
+          Permute(", TYRAM)
+TYRAM
+  Permute("MART, Y)
+    Permute("ART, YM)
+      Permute("RT, YMA)
+        Permute("T, YMAR)
+          Permute(", YMART)
+YMART
+        Permute("R, YMAT)
+          Permute(", YMATR)
+YMATR
+      Permute("AT, YMR)
+        Permute("T, YMRA)
+          Permute(", YMRAT)
+YMRAT
+        Permute("A, YMRT)
+          Permute(", YMRTA)
+YMRTA
+      Permute("AR, YMT)
+        Permute("R, YMTA)
+          Permute(", YMTAR)
+YMTAR
+        Permute("A, YMTR)
+          Permute(", YMTRA)
+YMTRA
+    Permute("MRT, YA)
+      Permute("RT, YAM)
+        Permute("T, YAMR)
+          Permute(", YAMRT)
+YAMRT
+        Permute("R, YAMT)
+          Permute(", YAMTR)
+YAMTR
+      Permute("MT, YAR)
+        Permute("T, YARM)
+          Permute(", YARMT)
+YARMT
+        Permute("M, YART)
+          Permute(", YARTM)
+YARTM
+      Permute("MR, YAT)
+        Permute("R, YATM)
+          Permute(", YATMR)
+YATMR
+        Permute("M, YATR)
+          Permute(", YATRM)
+YATRM
+    Permute("MAT, YR)
+      Permute("AT, YRM)
+        Permute("T, YRMA)
+          Permute(", YRMAT)
+YRMAT
+        Permute("A, YRMT)
+          Permute(", YRMTA)
+YRMTA
+      Permute("MT, YRA)
+        Permute("T, YRAM)
+          Permute(", YRAMT)
+YRAMT
+        Permute("M, YRAT)
+          Permute(", YRATM)
+YRATM
+      Permute("MA, YRT)
+        Permute("A, YRTM)
+          Permute(", YRTMA)
+YRTMA
+        Permute("M, YRTA)
+          Permute(", YRTAM)
+YRTAM
+    Permute("MAR, YT)
+      Permute("AR, YTM)
+        Permute("R, YTMA)
+          Permute(", YTMAR)
+YTMAR
+        Permute("A, YTMR)
+          Permute(", YTMRA)
+YTMRA
+      Permute("MR, YTA)
+        Permute("R, YTAM)
+          Permute(", YTAMR)
+YTAMR
+        Permute("M, YTAR)
+          Permute(", YTARM)
+YTARM
+      Permute("MA, YTR)
+        Permute("A, YTRM)
+          Permute(", YTRMA)
+YTRMA
+        Permute("M, YTRA)
+          Permute(", YTRAM)
+YTRAM
+
+....................Print all possible sub-list of the given vector...................
+
+Write function sublist that find every possible sub-list of the given vector. A sub-list of a Vector V contains >= 0 vector's elements. 
+
+V = {Jane, Bob, Mathu, Sara}
+Output: 
+{Jane, Bob, Mathu, Sara}
+{Jane, Bob, Mathu}
+{Jane, Bob, Sara}
+{Jane, Mathu, Sara}
+{Bob, Mathu, Sara}
+{Jane, Bob}
+{Jane, Sara}
+{Mathu, Sara}
+{Jane}
+{Sara}
+{Mathu}
+{Bob}
+{}
+.........
+.........
+
+You can print the Sub-list in any order One per-line. 
+
+
+
+
