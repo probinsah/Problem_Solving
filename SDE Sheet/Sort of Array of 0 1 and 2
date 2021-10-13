@@ -1,0 +1,143 @@
+1) Sort an array of 0's 1's and 2's without using extra space. 
+int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+Output: 0 0 0 0 0 1 1 1 1 2 2 
+
+Approach 1: Simply sort the array in Ascending order. Time Comp: O(n log n)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Recursion_Demo
+{
+    class Program
+    {
+        public static void sortMyArray(int[] arr)
+        {
+            Array.Sort(arr);
+        }
+        static void Main(string[] args)
+        {
+            int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+            sortMyArray(arr);
+            foreach(int i in arr)
+            {
+                Console.Write(i + " ");
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+Approach 2: Counting Sort (2 Pass) Time Comp: O(2n)
+step 1: Count the number of 0's, 1's and 2's 
+step 2: Insert that number of 0's 1's and 2's in Array.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Recursion_Demo
+{
+    class Program
+    {
+        public static void sortMyArray(int[] arr)
+        {
+            int count0 = 0, count1 = 0, count2 = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0) count0++;
+                if (arr[i] == 1) count1++;
+                if (arr[i] == 2) count2++;
+            }
+            for(int i = 0; i <  arr.Length; i++)
+            {
+                if(i < count0)
+                {
+                    arr[i] = 0;
+                }
+                else if(i < count0 + count1)
+                {
+                    arr[i] = 1;
+                }
+                else
+                {
+                    arr[i] = 2; 
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+            sortMyArray(arr);
+            foreach(int i in arr)
+            {
+                Console.Write(i + " ");
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+
+Approach 3: Dutch National Flag Algorithm. Time Comp O(n)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Recursion_Demo
+{
+    class Program
+    {
+        public static void sortMyArray(int[] arr)
+        {
+            int lo = 0, hi = arr.Length - 1, mid = 0;
+            int temp;
+            while(mid <= hi)
+            {
+                switch (arr[mid])
+                {
+                    case 0:
+                        {
+                            temp = arr[lo];
+                            arr[lo] = arr[mid];
+                            arr[mid] = temp;
+                            mid++;
+                            lo++;
+                            break;
+                        }
+                    case 1:
+                        {
+                            mid++;
+                            break;
+                        }
+                    case 2:
+                        {
+                            temp = arr[hi];
+                            arr[hi] = arr[mid];
+                            arr[mid] = temp;
+                            hi--;
+                            break;
+                        }
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            int[] arr = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+            sortMyArray(arr);
+            foreach(int i in arr)
+            {
+                Console.Write(i + " ");
+            }
+            Console.ReadKey();
+        }
+    }
+}
