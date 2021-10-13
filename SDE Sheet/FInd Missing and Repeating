@@ -1,0 +1,61 @@
+Approach 1: Using ABS property. 
+
+4 3 6 2 1 1 
+
+arr[4-1] = arr[3] = 2
+2 > 0 ==> arr[3] = -2
+
+arr[3-1] = arr[2] = 6
+6 > 0 ==> arr[2] = -6
+
+arr[6-1] = arr[5] = 1
+1 > 0 ==> arr[5] = -1
+
+arr[2-1] = arr[1] = 3
+3 > 0 ==> arr[1] = -3
+
+arr[1-1] = arr[0] = 4
+4 > 0 ==> arr[0] = -4
+
+arr[1-1] = arr[0] = -4
+-4 < 0 so the repeating element is 1
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Recursion_Demo
+{
+    class Program
+    {
+        public static void sortMyArray(int[] arr, int n)
+        {
+            int i;
+            Console.WriteLine("The repeating element is: ");
+            for(i = 0; i < n; i++)
+            {
+                int abs_val = Math.Abs(arr[i]);
+                Console.WriteLine(abs_val);
+                if (arr[abs_val - 1] > 0)
+                    arr[abs_val - 1] = -arr[abs_val - 1];
+                else
+                    Console.WriteLine(abs_val);
+            }
+            Console.WriteLine("The missing element is: ");
+            for(i = 0; i < n; i++)
+            {
+                if (arr[i] > 0)
+                    Console.WriteLine(i+1);
+            }
+        }
+        static void Main(string[] args)
+        {
+            int[] arr = { 4, 3, 6, 2, 1, 1 };
+            int n = arr.Length;
+            sortMyArray(arr, n);
+            Console.ReadKey();
+        }
+    }
+}
